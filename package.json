@@ -22,6 +22,7 @@
     "@types/node": "16.11.26",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
+    "@types/styled-components": "5.1.25",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",
     "@webpack-cli/generators": "2.4.2",
@@ -49,7 +50,8 @@
   },
   "dependencies": {
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "styled-components": "5.3.5"
   },
   "scripts": {
     "start": "webpack serve --mode=development --node-env=development",
@@ -59,8 +61,9 @@
     "prettier": "npx prettier --write .",
     "check": "npm test && npm run lint",
     "prepare": "husky install",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "sb": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "loki:update": "npm run build-storybook && npx loki update"
   },
   "eslintConfig": {
     "extends": [

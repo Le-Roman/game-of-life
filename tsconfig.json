@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "module": "es6",
     "target": "es5",
+    "module": "commonjs",
     "allowJs": true,
-    "jsx": "react"
-  },
-  "files": ["src/index.tsx"]
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true
+  }
 }

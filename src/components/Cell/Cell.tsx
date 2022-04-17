@@ -19,7 +19,12 @@ interface CellProps {
 }
 
 const Cell: FC<CellProps> = ({ cellData, onClick }) => {
-  return <CellStyled data-testid={`cell-${cellData}`} onClick={() => onClick(cellData)} />;
+  return (
+    <CellStyled
+      data-testid={`cell-${cellData}`}
+      onClick={() => onClick(cellData)}
+    />
+  );
 };
 
 export default Cell;

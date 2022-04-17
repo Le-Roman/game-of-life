@@ -8,8 +8,8 @@ export const generateBoardXY = (boardSize: BoardSize): CellsData => {
   );
 };
 
-const counter = (factor: number, cellCoord: Coordinates): number => {
-  const positionY: number = cellCoord.iY + 1;
+export const counter = (factor: number, cellCoord: Coordinates): number => {
+  const positionY: number = cellCoord.iY;
   const positionX: number = cellCoord.iX + 1;
   const positionGlob: number = positionY * factor + positionX;
   return positionGlob;

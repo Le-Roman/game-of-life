@@ -8,6 +8,7 @@
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "7.16.7",
     "@storybook/addon-actions": "6.4.21",
+    "@storybook/addon-controls": "6.4.21",
     "@storybook/addon-essentials": "6.4.21",
     "@storybook/addon-interactions": "6.4.21",
     "@storybook/addon-links": "6.4.21",
@@ -16,9 +17,10 @@
     "@storybook/react": "6.4.21",
     "@storybook/testing-library": "0.0.9",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.1.4",
+    "@testing-library/react": "13.0.1",
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "27.4.1",
+    "@types/jsdom": "^16.2.14",
     "@types/node": "16.11.26",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
@@ -63,7 +65,9 @@
     "prepare": "husky install",
     "sb": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "loki:update": "npm run build-storybook && npx loki update"
+    "loki:update": "npm run build-storybook && npx loki update --reactUri file:./storybook-static",
+    "loki:approve": "npx loki approve",
+    "loki": "npx loki test"
   },
   "eslintConfig": {
     "extends": [
@@ -92,10 +96,6 @@
         "height": 768,
         "deviceScaleFactor": 1,
         "mobile": false
-      },
-      "chrome.iphone7": {
-        "target": "chrome.app",
-        "preset": "iPhone 7"
       }
     }
   }

@@ -62,7 +62,7 @@
     "test": "jest",
     "lint:fix": "eslint --ext .ts,.tsx --fix ./",
     "prettier": "npx prettier --write .",
-    "check": "npm run lint:fix && npm test && npm run loki",
+    "check": "npm run lint:fix && npm test && npm run sb && npm run loki",
     "prepare": "husky install",
     "sb": "start-storybook -p 6006",
     "build-storybook": "build-storybook",

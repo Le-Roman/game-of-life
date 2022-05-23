@@ -40,6 +40,7 @@
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "jest": "27.5.1",
+    "lint-staged": "^12.4.1",
     "loki": "0.29.0",
     "prettier": "2.6.2",
     "style-loader": "3.3.1",
@@ -59,9 +60,9 @@
     "start": "webpack serve --mode=development --node-env=development",
     "build": "webpack --mode=production --node-env=production",
     "test": "jest",
-    "lint": "eslint --ext .ts,.tsx --fix ./",
+    "lint:fix": "eslint --ext .ts,.tsx --fix ./",
     "prettier": "npx prettier --write .",
-    "check": "npm test && npm run lint",
+    "check": "npm run lint:fix && npm test && npm run loki",
     "prepare": "husky install",
     "sb": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -98,5 +99,11 @@
         "mobile": false
       }
     }
+  },
+  "lint-staged": {
+    "*.(ts|tsx)": [
+      "npm run lint:fix",
+      "git add ."
+    ]
   }
 }

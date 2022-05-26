@@ -1,28 +1,42 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { cellSize } from "../../constants";
+import { CellState, Coordinates } from "../../types";
+
+interface CellStyledProps {
+  cellSize: number;
+  cellData: CellState;
+}
 
 const CellStyled = styled.div`
-  width: 16px;
-  height: 16px;
-  border-top: 1px solid grey;
-  border-left: 1px solid grey;
+  background-color: ${({ cellData }: CellStyledProps) =>
+    cellData ? "black" : "white"};
+  width: ${({ cellSize }: CellStyledProps) => cellSize}px;
+  height: ${({ cellSize }: CellStyledProps) => cellSize}px;
+  border: 1px solid grey;
   box-sizing: border-box;
+  border-radius: 50%;
 
   &:hover {
-    border: 3px solid black;
+    border: 2px solid black;
   }
 `;
 
 interface CellProps {
-  cellData: number;
-  onClick: (cellData: number) => void;
+  cellData: CellState;
+  x: number;
+  y: number;
+  onClick: (coord: Coordinates) => void;
 }
 
-const Cell: FC<CellProps> = ({ cellData, onClick }) => {
+const Cell: FC<CellProps> = ({ cellData, x, y, onClick }) => {
+  const handleOnClick = () => onClick({ x, y });
   return (
     <CellStyled
-      data-testid={`cell-${cellData}`}
-      onClick={() => onClick(cellData)}
+      data-testid={`${y}${x}`}
+      onClick={handleOnClick}
+      cellSize={cellSize}
+      cellData={cellData}
     />
   );
 };

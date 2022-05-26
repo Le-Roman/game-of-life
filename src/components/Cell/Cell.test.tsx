@@ -1,15 +1,24 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Cell from "./Cell";
+import { CellState } from "../../types";
 
-test("call an alert when clicking on a Сell", () => {
-  const cellData = 1;
-  window.alert = jest.fn();
+afterEach(cleanup);
 
-  render(<Cell cellData={cellData} onClick={window.alert} />);
+describe("Cell", () => {
+  it("click Сell", () => {
+    const cellData: CellState = 1;
+    const x = 10;
+    const y = 10;
+    const onClick = jest.fn();
 
-  userEvent.click(screen.getByTestId(`cell-${cellData}`));
-  expect(window.alert).toHaveBeenCalledTimes(1);
-  expect(window.alert).toHaveBeenCalledWith(cellData);
+    const { getByTestId } = render(
+      <Cell cellData={cellData} x={x} y={y} onClick={onClick} />
+    );
+
+    userEvent.click(getByTestId(`${y}${x}`));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledWith({ x, y });
+  });
 });

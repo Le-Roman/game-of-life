@@ -45,7 +45,7 @@ const App = () => {
       );
     }
     return () => clearInterval(playGame);
-  }, [mode]);
+  }, [mode, settings.boardSize, settings.speed]);
 
   const onChangeSettings = useCallback(
     (settings: GameSettings): void => setSettings(settings),
@@ -59,7 +59,7 @@ const App = () => {
   const onReStart = useCallback((): void => {
     setMode(Mode.STOP);
     setCellsData(generateBoard(settings));
-  }, []);
+  }, [settings]);
 
   const onCellClick = useCallback((coord: Coordinates): void => {
     setCellsData((prevCellsData) => toggleCell(coord, prevCellsData));
@@ -78,7 +78,7 @@ const App = () => {
     setMode(Mode.STOP);
     setCellsData(generateBoard(settings));
     setSettings(initialGameSettings);
-  }, []);
+  }, [settings]);
 
   return (
     <FlexBox alignItems={"center"} flexDirection={"vertical"}>

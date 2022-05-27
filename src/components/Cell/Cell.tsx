@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo, useCallback } from "react";
 import styled from "styled-components";
 import { cellSize } from "../../constants";
 import { CellState, Coordinates } from "../../types";
@@ -29,8 +29,8 @@ interface CellProps {
   onClick: (coord: Coordinates) => void;
 }
 
-const Cell: FC<CellProps> = ({ cellData, x, y, onClick }) => {
-  const handleOnClick = () => onClick({ x, y });
+const Cell: FC<CellProps> = memo(({ cellData, x, y, onClick }) => {
+  const handleOnClick = useCallback(() => onClick({ x, y }), [onClick, x, y]);
   return (
     <CellStyled
       data-testid={`${y}${x}`}
@@ -39,6 +39,6 @@ const Cell: FC<CellProps> = ({ cellData, x, y, onClick }) => {
       cellData={cellData}
     />
   );
-};
+});
 
 export default Cell;

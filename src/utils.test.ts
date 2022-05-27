@@ -1,5 +1,4 @@
 import { cleanup } from "@testing-library/react";
-import { notDeepEqual } from "assert";
 import { cellStateAlive } from "./constants";
 import { BoardSize, CellsData, CellState, GameSettings } from "./types";
 import {

@@ -1,8 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo } from "react";
 import { BoardSize, CellsData, Coordinates } from "../../types";
 import Cell from "../Cell/Cell";
 import styled from "styled-components";
-import { generateBoardXY } from "../../utils";
 import { cellSize } from "../../constants";
 
 interface BoardStyledProps {
@@ -23,7 +22,7 @@ interface BoardProps {
   onCellClick: (coord: Coordinates) => void;
 }
 
-const Board: FC<BoardProps> = ({ cellsData, boardSize, onCellClick }) => {
+const Board: FC<BoardProps> = memo(({ cellsData, boardSize, onCellClick }) => {
   return (
     <BoardStyled boardSize={boardSize} cellSize={cellSize} data-testid="board">
       {cellsData.map((row, iRow) => (
@@ -41,6 +40,6 @@ const Board: FC<BoardProps> = ({ cellsData, boardSize, onCellClick }) => {
       ))}
     </BoardStyled>
   );
-};
+});
 
 export default Board;

@@ -24,7 +24,7 @@ describe("FormLogin", () => {
 
   it("enter username in input and click on start", () => {
     const onLogin = jest.fn();
-    const { getByTestId, debug } = render(
+    const { getByTestId } = render(
       <FormLogin login={""} onLogin={onLogin} onLogout={() => null} />
     );
 

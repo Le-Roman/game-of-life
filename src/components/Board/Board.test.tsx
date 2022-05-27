@@ -1,23 +1,30 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import Board from "./Board";
-import { BoardSize, CellsData } from "../../types";
-import { generateBoardXY } from "../../utils";
+import { CellsData, GameSettings } from "../../types";
+import { generateBoard } from "../../utils";
 
-test("render all celss in Border component", () => {
-  const boardSize: BoardSize = { x: 10, y: 10 };
-  const cellsData: CellsData = generateBoardXY(boardSize);
-  const onCellClick = jest.fn();
+afterEach(cleanup);
 
-  render(
-    <Board
-      boardSize={boardSize}
-      cellsData={cellsData}
-      onCellClick={onCellClick}
-    />
-  );
+describe("Board", () => {
+  it("render all celss in Border component", () => {
+    const settings: GameSettings = {
+      boardSize: { x: 5, y: 5 },
+      boardFillPercent: 15,
+      speed: 3,
+    };
+    const { x, y } = settings.boardSize;
+    const cellsData: CellsData = generateBoard(settings);
+    const onCellClick = jest.fn();
 
-  expect(screen.getAllByTestId(/cell/).length).toEqual(
-    boardSize.x * boardSize.y
-  );
+    const { getAllByTestId } = render(
+      <Board
+        boardSize={settings.boardSize}
+        cellsData={cellsData}
+        onCellClick={onCellClick}
+      />
+    );
+
+    expect(getAllByTestId(/[0-44]/)).toHaveLength(x * y);
+  });
 });

@@ -13,4 +13,4 @@ jobs:
         with:
           message: |
             You can check this code at CodeSandbox with the link
-            https://githubbox.com/${{ github.repository }}/tree/${{ github.head_ref }}
+            https://githubbox.com/${{ github.repository }}/tree/${{ github.ref_name }}

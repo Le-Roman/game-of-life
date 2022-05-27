@@ -107,7 +107,7 @@ export const resizeBoard = (
       ];
     }
   }
-  newCellsData = newCellsData.map((row) => {
+  newCellsData = newCellsData.map((row: CellState[]): CellState[] => {
     if (row.length === x) {
       return row;
     }
@@ -115,7 +115,9 @@ export const resizeBoard = (
       ? row.slice(0, x)
       : [
           ...row,
-          ...Array.from(Array(x - row.length)).map(() => cellStateEmpty),
+          ...Array.from(Array(x - row.length)).map<CellState>(
+            () => cellStateEmpty
+          ),
         ];
   });
   return newCellsData;

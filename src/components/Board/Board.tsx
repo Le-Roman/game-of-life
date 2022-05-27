@@ -25,7 +25,7 @@ interface BoardProps {
 
 const Board: FC<BoardProps> = ({ cellsData, boardSize, onCellClick }) => {
   return (
-    <BoardStyled boardSize={boardSize} cellSize={cellSize}>
+    <BoardStyled boardSize={boardSize} cellSize={cellSize} data-testid="board">
       {cellsData.map((row, iRow) => (
         <div key={iRow} style={{ display: "flex" }}>
           {row.map((cell, iCell) => (

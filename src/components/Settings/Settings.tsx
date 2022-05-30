@@ -80,7 +80,7 @@ const Settings: FC<SettingsPropsType> = memo(
     }, []);
 
     return (
-      <FlexBox flexDirection={"vertical"} data-testid="settingsGame">
+      <FlexBox flexDirection="vertical" data-testid="settingsGame">
         <label htmlFor="boardSizeX">Ширина поля</label>
         <InputRange
           id="boardSizeX"
@@ -118,7 +118,7 @@ const Settings: FC<SettingsPropsType> = memo(
           onChange={onChangeBoardFillPercent}
           disabled={mode !== Mode.STOP}
         />
-        <FlexBox justifyContent={"space-around"}>
+        <FlexBox justifyContent="space-around">
           <Button onClick={save} disabled={!changed} data-testid="s-btn-save">
             Применить
           </Button>

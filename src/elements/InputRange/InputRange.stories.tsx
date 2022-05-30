@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof InputRange> = (args) => (
   <InputRange {...args} />
 );
 
-export const InputRangeDefault = Template.bind({});
+export const InputRangeDefault = Template;
 InputRangeDefault.args = {
   value: 50,
 };

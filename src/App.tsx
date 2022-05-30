@@ -52,39 +52,35 @@ const App = () => {
     []
   );
 
-  const onStart = useCallback((): void => setMode(Mode.PLAY), []);
+  const onStart = (): void => setMode(Mode.PLAY);
 
-  const onPause = useCallback((): void => setMode(Mode.PAUSE), []);
+  const onPause = (): void => setMode(Mode.PAUSE);
 
-  const onReStart = useCallback((): void => {
+  const onReStart = (): void => {
     setMode(Mode.STOP);
     setCellsData(generateBoard(settings));
-  }, [settings]);
+  };
 
-  const onCellClick = useCallback((coord: Coordinates): void => {
+  const onCellClick = (coord: Coordinates): void => {
     setCellsData((prevCellsData) => toggleCell(coord, prevCellsData));
-  }, []);
+  };
 
-  const onLogin = useCallback((value: string) => {
-    if (value) {
-      setLogin(value);
-    } else {
-      alert("Вы не ввели имя!");
-    }
-  }, []);
+  const onLogin = (value: string) => {
+    value ? setLogin(value) : alert("Вы не ввели имя!");
+  };
 
-  const onLogout = useCallback(() => {
+  const onLogout = () => {
     setLogin("");
     setMode(Mode.STOP);
     setCellsData(generateBoard(settings));
     setSettings(initialGameSettings);
-  }, [settings]);
+  };
 
   return (
-    <FlexBox alignItems={"center"} flexDirection={"vertical"}>
+    <FlexBox alignItems="center" flexDirection="vertical">
       <Header>Игра «Жизнь»</Header>
-      <FlexBox gap={"1rem"}>
-        <FlexBox alignItems={"center"} flexDirection={"vertical"}>
+      <FlexBox gap="1rem">
+        <FlexBox alignItems="center" flexDirection="vertical">
           <FormLogin login={login} onLogin={onLogin} onLogout={onLogout} />
           {login && (
             <>

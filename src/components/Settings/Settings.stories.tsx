@@ -27,7 +27,7 @@ const Template: ComponentStory<typeof Settings> = (args) => (
   <Settings {...args} />
 );
 
-export const SettingsDefault = Template.bind({});
+export const SettingsDefault = Template;
 
 const initialGameSettings: GameSettings = {
   boardSize: { x: 50, y: 50 },

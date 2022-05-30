@@ -13,7 +13,7 @@ export default {
 
 const Template: ComponentStory<typeof Board> = (args) => <Board {...args} />;
 
-export const BoardDefault = Template.bind({});
+export const BoardDefault = Template;
 
 BoardDefault.args = {
   boardSize: { x: 5, y: 5 },

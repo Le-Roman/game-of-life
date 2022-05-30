@@ -22,7 +22,7 @@ const FormLogin: FC<FormLoginProps> = ({ login, onLogin, onLogout }) => {
   };
 
   return (
-    <FlexBox flexDirection={"vertical"} width={"100%"} data-testid="formLogin">
+    <FlexBox flexDirection="vertical" width="100%" data-testid="formLogin">
       {!login ? (
         <>
           <Input

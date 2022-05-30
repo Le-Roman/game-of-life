@@ -59,7 +59,7 @@
   "scripts": {
     "start": "webpack serve --mode=development --node-env=development",
     "build": "webpack --mode=production --node-env=production",
-    "test": "jest --watch --coverage",
+    "test": "jest --coverage",
     "lint:fix": "eslint --ext .ts,.tsx --fix ./",
     "lint": "eslint --ext .ts,.tsx ./",
     "prettier": "npx prettier --write .",

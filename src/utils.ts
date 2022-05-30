@@ -130,7 +130,7 @@ export const toggleCell = (
   const { x, y } = coord;
   if (y >= cellsData.length || y < 0) return cellsData;
   if (x < 0 || x >= cellsData[y].length) return cellsData;
-  const newCellsData = cellsData;
+  const newCellsData = [...cellsData];
   newCellsData[y][x] =
     newCellsData[y][x] === cellStateAlive ? cellStateEmpty : cellStateAlive;
   return newCellsData;

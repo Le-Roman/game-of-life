@@ -1,8 +1,12 @@
-export type CellsData = Array<Array<number>>;
+import { cellStateAlive, cellStateEmpty } from "./constants";
 
-export interface CellData {
+export type CellState = typeof cellStateAlive | typeof cellStateEmpty;
+export type CellsData = Array<Array<CellState>>;
+
+export interface GameSettings {
   boardSize: BoardSize;
-  cellCoord: Coordinates;
+  boardFillPercent: number;
+  speed: number;
 }
 
 export interface BoardSize {
@@ -11,6 +15,12 @@ export interface BoardSize {
 }
 
 export interface Coordinates {
-  iY: number;
-  iX: number;
+  x: number;
+  y: number;
+}
+
+export enum Mode {
+  PAUSE = "PAUSE",
+  PLAY = "PLAY",
+  STOP = "STOP",
 }

@@ -1,37 +1,43 @@
-import React, { FC } from "react";
-import { BoardSize, CellsData } from "../../types";
+import React, { FC, memo } from "react";
+import { BoardSize, CellsData, Coordinates } from "../../types";
 import Cell from "../Cell/Cell";
 import styled from "styled-components";
+import { CELL_SIZE } from "../../constants";
 
 interface BoardStyledProps {
   boardSize: BoardSize;
+  cellSize: number;
 }
 
-const BoardStyled = styled.div`
-  border-right: 1px solid grey;
-  border-bottom: 1px solid grey;
-  width: ${(props: BoardStyledProps) => props.boardSize.x * 16}px;
-  height: ${(props: BoardStyledProps) => props.boardSize.y * 16}px;
+const BoardStyled = styled.div<BoardStyledProps>`
+  width: ${({ boardSize: { x }, cellSize }) => x * cellSize}px;
+  height: ${({ boardSize: { y }, cellSize }) => y * cellSize}px;
 `;
 
 interface BoardProps {
   cellsData: CellsData;
   boardSize: BoardSize;
-  onCellClick: (cellData: number) => void;
+  onCellClick: (coord: Coordinates) => void;
 }
 
-const Board: FC<BoardProps> = ({ cellsData, boardSize, onCellClick }) => {
+const Board: FC<BoardProps> = memo(({ cellsData, boardSize, onCellClick }) => {
   return (
-    <BoardStyled boardSize={boardSize}>
+    <BoardStyled boardSize={boardSize} cellSize={CELL_SIZE} data-testid="board">
       {cellsData.map((row, iRow) => (
         <div key={iRow} style={{ display: "flex" }}>
           {row.map((cell, iCell) => (
-            <Cell key={iCell} cellData={cell} onClick={onCellClick} />
+            <Cell
+              key={`${iRow}${iCell}`}
+              cellData={cell}
+              x={iCell}
+              y={iRow}
+              onClick={onCellClick}
+            />
           ))}
         </div>
       ))}
     </BoardStyled>
   );
-};
+});
 
 export default Board;

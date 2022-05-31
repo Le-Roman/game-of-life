@@ -59,10 +59,11 @@
   "scripts": {
     "start": "webpack serve --mode=development --node-env=development",
     "build": "webpack --mode=production --node-env=production",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint:fix": "eslint --ext .ts,.tsx --fix ./",
+    "lint": "eslint --ext .ts,.tsx ./",
     "prettier": "npx prettier --write .",
-    "check": "npm run lint:fix && npm test && npm run sb && npm run loki",
+    "check": "npm run lint && npm test",
     "prepare": "husky install",
     "sb": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -102,8 +103,7 @@
   },
   "lint-staged": {
     "*.(ts|tsx)": [
-      "npm run lint:fix",
-      "git add ."
+      "npm run lint:fix"
     ]
   }
 }

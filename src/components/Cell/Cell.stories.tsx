@@ -5,6 +5,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import Cell from "./Cell";
+import { CELL_STATE_EMPTY, CELL_STATE_ALIVE } from "../../constants";
 
 export default {
   title: "Game_of_life/Cell",
@@ -13,8 +14,12 @@ export default {
 
 const Template: ComponentStory<typeof Cell> = (args) => <Cell {...args} />;
 
-export const CellDefault = Template.bind({});
+export const CellAlive = Template.bind({});
+CellAlive.args = {
+  cellData: CELL_STATE_ALIVE,
+};
 
-CellDefault.args = {
-  cellData: 1,
+export const CellEmpty = Template.bind({});
+CellEmpty.args = {
+  cellData: CELL_STATE_EMPTY,
 };

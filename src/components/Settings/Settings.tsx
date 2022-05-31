@@ -21,7 +21,7 @@ const Settings: FC<SettingsPropsType> = memo(
     const [boardSizeY, setBoardSizeY] = useState<number>(boardSize.y);
     const [boardFill, setBoardFill] = useState<number>(boardFillPercent);
     const [gameSpeed, setGameSpeed] = useState<number>(speed);
-    const [changed, setChanged] = useState(false);
+    const [changed, setChanged] = useState<boolean>(false);
 
     const getNewSettings = (): GameSettings => {
       return {

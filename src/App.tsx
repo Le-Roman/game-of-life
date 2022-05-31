@@ -83,16 +83,14 @@ const App = () => {
         <FlexBox alignItems="center" flexDirection="vertical">
           <FormLogin login={login} onLogin={onLogin} onLogout={onLogout} />
           {login && (
-            <>
-              <Settings
-                settings={settings}
-                onChangeSettings={onChangeSettings}
-                onPause={onPause}
-                onStart={onStart}
-                onReStart={onReStart}
-                mode={mode}
-              />
-            </>
+            <Settings
+              settings={settings}
+              onChangeSettings={onChangeSettings}
+              onPause={onPause}
+              onStart={onStart}
+              onReStart={onReStart}
+              mode={mode}
+            />
           )}
         </FlexBox>
         <Board

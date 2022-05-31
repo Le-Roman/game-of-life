@@ -1,3 +1,3 @@
-export const cellSize = 8;
-export const cellStateAlive = 1;
-export const cellStateEmpty = 0;
+export const CELL_SIZE = 8;
+export const CELL_STATE_ALIVE = 1;
+export const CELL_STATE_EMPTY = 0;

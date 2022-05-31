@@ -1,5 +1,5 @@
 import { cleanup } from "@testing-library/react";
-import { cellStateAlive } from "./constants";
+import { CELL_STATE_ALIVE } from "./constants";
 import { BoardSize, CellsData, CellState, GameSettings } from "./types";
 import {
   countSurrounding,
@@ -29,7 +29,7 @@ const getCountAlive = (board: CellsData) =>
 describe("Utils", () => {
   it("should generateBoardXY 3x3 cellStateAlive", () => {
     const boardSize: BoardSize = { x: 3, y: 3 };
-    const board: CellsData = generateBoardXY(boardSize, cellStateAlive);
+    const board: CellsData = generateBoardXY(boardSize, CELL_STATE_ALIVE);
     expect(board).toEqual([
       [1, 1, 1],
       [1, 1, 1],

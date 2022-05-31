@@ -1,4 +1,4 @@
-import { cellStateAlive, cellStateEmpty } from "./constants";
+import { CELL_STATE_ALIVE, CELL_STATE_EMPTY } from "./constants";
 import {
   BoardSize,
   CellsData,
@@ -24,8 +24,8 @@ export const generateBoard = (settings: GameSettings): CellsData => {
   let countFill = isReverseFill
     ? boardCellsCount - countFillCells
     : countFillCells;
-  const init = isReverseFill ? cellStateAlive : cellStateEmpty;
-  const fill = isReverseFill ? cellStateEmpty : cellStateAlive;
+  const init = isReverseFill ? CELL_STATE_ALIVE : CELL_STATE_EMPTY;
+  const fill = isReverseFill ? CELL_STATE_EMPTY : CELL_STATE_ALIVE;
   const cellsData = generateBoardXY(boardSize, init);
   while (countFill > 0) {
     const x = Math.floor(Math.random() * boardSize.x);
@@ -44,7 +44,7 @@ export const isAlive = (
   y: number
 ): CellState => {
   if (y < 0 || y >= cellsData.length || x < 0 || x >= cellsData[y].length) {
-    return cellStateEmpty;
+    return CELL_STATE_EMPTY;
   }
   return cellsData[y][x];
 };
@@ -73,15 +73,15 @@ export const getNewState = (
 ): CellState => {
   const numAlive = countSurrounding(cellsData, x, y);
   return numAlive === 3 ||
-    (numAlive === 2 && cellsData[y][x] === cellStateAlive)
-    ? cellStateAlive
-    : cellStateEmpty;
+    (numAlive === 2 && cellsData[y][x] === CELL_STATE_ALIVE)
+    ? CELL_STATE_ALIVE
+    : CELL_STATE_EMPTY;
 };
 
 export const nextGeneration = (cellsData: CellsData): CellsData => {
   const newCellsData = generateBoardXY(
     { x: cellsData[0].length, y: cellsData.length },
-    cellStateEmpty
+    CELL_STATE_EMPTY
   );
   for (let y = 0; y < cellsData.length; y++) {
     for (let x = 0; x < cellsData[y].length; x++) {
@@ -103,7 +103,7 @@ export const resizeBoard = (
     } else if (cellsData.length < y) {
       newCellsData = [
         ...cellsData,
-        ...generateBoardXY({ y: y - cellsData.length, x }, cellStateEmpty),
+        ...generateBoardXY({ y: y - cellsData.length, x }, CELL_STATE_EMPTY),
       ];
     }
   }
@@ -116,7 +116,7 @@ export const resizeBoard = (
       : [
           ...row,
           ...Array.from(Array(x - row.length)).map<CellState>(
-            () => cellStateEmpty
+            () => CELL_STATE_EMPTY
           ),
         ];
   });
@@ -132,7 +132,9 @@ export const toggleCell = (
   if (x < 0 || x >= cellsData[y].length) return cellsData;
   const newCellsData = [...cellsData];
   newCellsData[y][x] =
-    newCellsData[y][x] === cellStateAlive ? cellStateEmpty : cellStateAlive;
+    newCellsData[y][x] === CELL_STATE_ALIVE
+      ? CELL_STATE_EMPTY
+      : CELL_STATE_ALIVE;
   return newCellsData;
 };
 

@@ -2,18 +2,16 @@ import React, { FC, memo } from "react";
 import { BoardSize, CellsData, Coordinates } from "../../types";
 import Cell from "../Cell/Cell";
 import styled from "styled-components";
-import { cellSize } from "../../constants";
+import { CELL_SIZE } from "../../constants";
 
 interface BoardStyledProps {
   boardSize: BoardSize;
   cellSize: number;
 }
 
-const BoardStyled = styled.div`
-  width: ${({ boardSize: { x }, cellSize }: BoardStyledProps) =>
-    x * cellSize}px;
-  height: ${({ boardSize: { y }, cellSize }: BoardStyledProps) =>
-    y * cellSize}px;
+const BoardStyled = styled.div<BoardStyledProps>`
+  width: ${({ boardSize: { x }, cellSize }) => x * cellSize}px;
+  height: ${({ boardSize: { y }, cellSize }) => y * cellSize}px;
 `;
 
 interface BoardProps {
@@ -24,7 +22,7 @@ interface BoardProps {
 
 const Board: FC<BoardProps> = memo(({ cellsData, boardSize, onCellClick }) => {
   return (
-    <BoardStyled boardSize={boardSize} cellSize={cellSize} data-testid="board">
+    <BoardStyled boardSize={boardSize} cellSize={CELL_SIZE} data-testid="board">
       {cellsData.map((row, iRow) => (
         <div key={iRow} style={{ display: "flex" }}>
           {row.map((cell, iCell) => (

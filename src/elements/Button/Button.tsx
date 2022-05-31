@@ -4,10 +4,10 @@ interface ButtonProps {
   mode?: "primary" | "secondary";
 }
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
   font-family: Roboto, Golos, monospace;
   font-size: 1rem;
-  background-color: ${({ mode }: ButtonProps) => getBackgroundColor(mode)};
+  background-color: ${({ mode }) => getBackgroundColor(mode)};
   cursor: pointer;
 
   &:hover {

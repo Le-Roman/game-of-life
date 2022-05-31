@@ -1,6 +1,6 @@
 import React, { FC, memo, useCallback } from "react";
 import styled from "styled-components";
-import { cellSize } from "../../constants";
+import { CELL_SIZE } from "../../constants";
 import { CellState, Coordinates } from "../../types";
 
 interface CellStyledProps {
@@ -8,11 +8,10 @@ interface CellStyledProps {
   cellData: CellState;
 }
 
-const CellStyled = styled.div`
-  background-color: ${({ cellData }: CellStyledProps) =>
-    cellData ? "black" : "white"};
-  width: ${({ cellSize }: CellStyledProps) => cellSize}px;
-  height: ${({ cellSize }: CellStyledProps) => cellSize}px;
+const CellStyled = styled.div<CellStyledProps>`
+  background-color: ${({ cellData }) => (cellData ? "black" : "white")};
+  width: ${({ cellSize }) => cellSize}px;
+  height: ${({ cellSize }) => cellSize}px;
   border: 1px solid grey;
   box-sizing: border-box;
   border-radius: 50%;
@@ -35,7 +34,7 @@ const Cell: FC<CellProps> = memo(({ cellData, x, y, onClick }) => {
     <CellStyled
       data-testid={`${y}${x}`}
       onClick={handleOnClick}
-      cellSize={cellSize}
+      cellSize={CELL_SIZE}
       cellData={cellData}
     />
   );

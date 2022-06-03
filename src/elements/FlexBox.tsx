@@ -7,6 +7,7 @@ interface FlexBoxProps {
   justifyContent?: string;
   gap?: string;
   width?: string;
+  margin?: string;
 }
 
 export const FlexBox = styled.div<FlexBoxProps>`
@@ -18,4 +19,5 @@ export const FlexBox = styled.div<FlexBoxProps>`
   justify-content: ${({ justifyContent }) => justifyContent || "unset"};
   font-family: Roboto, Golos, monospace;
   width: ${({ width }) => width};
+  margin: ${({ margin }) => margin};
 `;

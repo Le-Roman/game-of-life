@@ -29,8 +29,6 @@ const App = () => {
     onLogout,
   } = useContext(UserLoginContext);
 
-  console.log(login);
-
   useEffect(() => {
     setCellsData(resizeBoard(cellsData, settings.boardSize));
   }, [settings.boardSize]);

@@ -12,7 +12,6 @@ const FormLogin: FC = () => {
   const [value, setValue] = useState<string>("");
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   const { from } = (location.state as LocationState) || "/";
 

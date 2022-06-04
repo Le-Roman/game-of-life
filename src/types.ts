@@ -32,11 +32,13 @@ export enum Mode {
 export enum ActionType {
   LOGIN = "login",
   LOGOUT = "logout",
+  TEST = "test",
 }
 
 export type Action =
   | { type: ActionType.LOGIN; payload: string }
-  | { type: ActionType.LOGOUT };
+  | { type: ActionType.LOGOUT }
+  | { type: ActionType.TEST };
 
 export interface LocationState {
   from: {

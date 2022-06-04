@@ -13,7 +13,8 @@ const FormLogin: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { from } = (location.state as LocationState) || "/";
+  const locationState = location.state as LocationState;
+  const from = locationState?.from?.pathname || "/";
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -22,7 +23,7 @@ const FormLogin: FC = () => {
   const onStartClick = () => {
     onLogin(value);
     setValue("");
-    navigate(from.pathname, { replace: true });
+    navigate(from, { replace: true });
   };
 
   return (

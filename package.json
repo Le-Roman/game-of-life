@@ -61,6 +61,7 @@
     "start": "webpack serve --mode=development --node-env=development",
     "build": "webpack --mode=production --node-env=production",
     "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "lint:fix": "eslint --ext .ts,.tsx --fix ./",
     "lint": "eslint --ext .ts,.tsx ./",
     "prettier": "npx prettier --write .",

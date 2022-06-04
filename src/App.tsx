@@ -40,9 +40,9 @@ const App = () => {
   }, [settings.boardFillPercent]);
 
   useEffect(() => {
-    let playGame: NodeJS.Timer;
+    let playGame: number;
     if (mode === Mode.PLAY) {
-      playGame = setInterval(() => {
+      playGame = window.setInterval(() => {
         setCellsData((prevCellsData) => nextGeneration(prevCellsData));
       }, speedToMs(settings.speed));
     } else {

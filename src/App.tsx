@@ -30,7 +30,9 @@ const App = () => {
   } = useContext(UserLoginContext);
 
   useEffect(() => {
-    setCellsData(resizeBoard(cellsData, settings.boardSize));
+    setCellsData((prevCellsData) =>
+      resizeBoard(prevCellsData, settings.boardSize)
+    );
   }, [settings.boardSize]);
 
   useEffect(() => {
@@ -76,6 +78,8 @@ const App = () => {
   const onCellClick = (coord: Coordinates): void => {
     setCellsData((prevCellsData) => toggleCell(coord, prevCellsData));
   };
+
+  if (!login) return null;
 
   return (
     <FlexBox alignItems="center" flexDirection="vertical">

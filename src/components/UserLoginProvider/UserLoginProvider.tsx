@@ -3,7 +3,7 @@ import { createContext, useReducer } from "react";
 import { initialState, reducer } from "../../reducer";
 import { ActionType, State } from "../../types";
 
-interface ContextState {
+export interface ContextState {
   state: State;
   onLogin: (login: string) => void;
   onLogout: () => void;

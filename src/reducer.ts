@@ -3,7 +3,7 @@ import { Action, State } from "./types";
 
 export const initialState: State = { login: "" };
 
-export const reducer = (state: State, action: Action): State => {
+export const reducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
     case ActionType.LOGIN:
       return { ...state, login: action.payload };

@@ -1,4 +1,4 @@
-import React, { ReactChild } from "react";
+import React, { FC, PropsWithChildren, ReactChild, ReactNode } from "react";
 import { createContext, useReducer } from "react";
 import { initialState, reducer } from "../../reducer";
 import { ActionType, State } from "../../types";
@@ -9,13 +9,11 @@ export interface ContextState {
   onLogout: () => void;
 }
 
-interface UserLoginProviderProps {
-  children: ReactChild;
-}
-
 export const UserLoginContext = createContext({} as ContextState);
 
-export const UserLoginProvider = ({ children }: UserLoginProviderProps) => {
+export const UserLoginProvider: FC<PropsWithChildren<ReactNode>> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const onLogin = (login: string) =>

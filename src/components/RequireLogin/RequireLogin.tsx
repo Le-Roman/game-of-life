@@ -1,10 +1,22 @@
-import React from "react";
+import React, {
+  FC,
+  PropsWithChildren,
+  ReactChild,
+  ReactElement,
+  ReactNode,
+} from "react";
 import { useContext } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { ROUTE } from "../../constants";
 import { UserLoginContext } from "../UserLoginProvider/UserLoginProvider";
 
-export const RequireLogin = ({ children }: { children: JSX.Element }) => {
+interface RequireLoginProps {
+  children: ReactElement;
+}
+
+export const RequireLogin: FC<PropsWithChildren<RequireLoginProps>> = ({
+  children,
+}) => {
   const {
     state: { login },
   } = useContext(UserLoginContext);

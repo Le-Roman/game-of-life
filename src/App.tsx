@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { CellsData, Coordinates, GameSettings, Mode } from "./types";
 import {
   generateBoard,
@@ -10,8 +10,9 @@ import {
 import Board from "./components/Board/Board";
 import Settings from "./components/Settings/Settings";
 import { FlexBox } from "./elements/FlexBox";
-import FormLogin from "./components/FormLogin/FormLogin";
 import { Header } from "./elements/Header";
+import { UserLoginContext } from "./components/UserLoginProvider/UserLoginProvider";
+import { Button } from "./elements/Button/Button";
 
 const initialGameSettings: GameSettings = {
   boardSize: { x: 50, y: 50 },
@@ -23,10 +24,15 @@ const App = () => {
   const [settings, setSettings] = useState<GameSettings>(initialGameSettings);
   const [cellsData, setCellsData] = useState<CellsData>([] as CellsData);
   const [mode, setMode] = useState<Mode>(Mode.STOP);
-  const [login, setLogin] = useState<string>("");
+  const {
+    state: { login },
+    onLogout,
+  } = useContext(UserLoginContext);
 
   useEffect(() => {
-    setCellsData(resizeBoard(cellsData, settings.boardSize));
+    setCellsData((prevCellsData) =>
+      resizeBoard(prevCellsData, settings.boardSize)
+    );
   }, [settings.boardSize]);
 
   useEffect(() => {
@@ -34,9 +40,9 @@ const App = () => {
   }, [settings.boardFillPercent]);
 
   useEffect(() => {
-    let playGame: NodeJS.Timer;
+    let playGame: number;
     if (mode === Mode.PLAY) {
-      playGame = setInterval(() => {
+      playGame = window.setInterval(() => {
         setCellsData((prevCellsData) => nextGeneration(prevCellsData));
       }, speedToMs(settings.speed));
     } else {
@@ -46,6 +52,14 @@ const App = () => {
     }
     return () => clearInterval(playGame);
   }, [mode, settings.boardSize, settings.speed]);
+
+  useEffect(() => {
+    if (!login) {
+      setMode(Mode.STOP);
+      setCellsData(generateBoard(settings));
+      setSettings(initialGameSettings);
+    }
+  }, [login]);
 
   const onChangeSettings = useCallback(
     (settings: GameSettings): void => setSettings(settings),
@@ -65,33 +79,27 @@ const App = () => {
     setCellsData((prevCellsData) => toggleCell(coord, prevCellsData));
   };
 
-  const onLogin = (value: string) => {
-    value ? setLogin(value) : alert("Вы не ввели имя!");
-  };
-
-  const onLogout = () => {
-    setLogin("");
-    setMode(Mode.STOP);
-    setCellsData(generateBoard(settings));
-    setSettings(initialGameSettings);
-  };
+  if (!login) return null;
 
   return (
     <FlexBox alignItems="center" flexDirection="vertical">
       <Header>Игра «Жизнь»</Header>
       <FlexBox gap="1rem">
         <FlexBox alignItems="center" flexDirection="vertical">
-          <FormLogin login={login} onLogin={onLogin} onLogout={onLogout} />
-          {login && (
-            <Settings
-              settings={settings}
-              onChangeSettings={onChangeSettings}
-              onPause={onPause}
-              onStart={onStart}
-              onReStart={onReStart}
-              mode={mode}
-            />
-          )}
+          <FlexBox flexDirection="vertical" width="100%">
+            <label data-testid="greetingsUser">Здравствуйте, {login}!</label>
+            <Button onClick={onLogout} data-testid="l-btn-logout">
+              Выйти
+            </Button>
+          </FlexBox>
+          <Settings
+            settings={settings}
+            onChangeSettings={onChangeSettings}
+            onPause={onPause}
+            onStart={onStart}
+            onReStart={onReStart}
+            mode={mode}
+          />
         </FlexBox>
         <Board
           cellsData={cellsData}

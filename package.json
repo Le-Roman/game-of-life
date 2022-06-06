@@ -54,12 +54,14 @@
   "dependencies": {
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-router-dom": "^6.3.0",
     "styled-components": "5.3.5"
   },
   "scripts": {
     "start": "webpack serve --mode=development --node-env=development",
     "build": "webpack --mode=production --node-env=production",
     "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "lint:fix": "eslint --ext .ts,.tsx --fix ./",
     "lint": "eslint --ext .ts,.tsx ./",
     "prettier": "npx prettier --write .",

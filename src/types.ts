@@ -1,6 +1,6 @@
-import { cellStateAlive, cellStateEmpty } from "./constants";
+import { CELL_STATE_ALIVE, CELL_STATE_EMPTY } from "./constants";
 
-export type CellState = typeof cellStateAlive | typeof cellStateEmpty;
+export type CellState = typeof CELL_STATE_ALIVE | typeof CELL_STATE_EMPTY;
 export type CellsData = Array<Array<CellState>>;
 
 export interface GameSettings {
@@ -19,8 +19,33 @@ export interface Coordinates {
   y: number;
 }
 
+export interface State {
+  login: string;
+}
+
 export enum Mode {
   PAUSE = "PAUSE",
   PLAY = "PLAY",
   STOP = "STOP",
+}
+
+export enum ActionType {
+  LOGIN = "login",
+  LOGOUT = "logout",
+  TEST = "test",
+}
+
+export type Action =
+  | { type: ActionType.LOGIN; payload: string }
+  | { type: ActionType.LOGOUT }
+  | { type: ActionType.TEST };
+
+export interface LocationState {
+  from: {
+    hash: string;
+    key: string;
+    pathname: string;
+    search: string;
+    state: null;
+  };
 }

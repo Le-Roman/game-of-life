@@ -148,8 +148,6 @@ export const speedToMs = (speed: number): number => {
       return 250;
     case 4:
       return 100;
-    case 5:
-      return 25;
     default:
       return 500;
   }

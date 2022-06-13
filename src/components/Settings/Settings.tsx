@@ -105,7 +105,7 @@ const Settings: FC<SettingsPropsType> = memo(
           data-testid="inputSpeed"
           value={gameSpeed}
           min={1}
-          max={5}
+          max={4}
           onChange={onChangeSpeed}
         />
         <label htmlFor="boardFillPercent">Начальный процент заполнения</label>

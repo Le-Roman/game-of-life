@@ -137,7 +137,6 @@ describe("Utils", () => {
     expect(speedToMs(2)).toBe(500);
     expect(speedToMs(3)).toBe(250);
     expect(speedToMs(4)).toBe(100);
-    expect(speedToMs(5)).toBe(25);
-    expect(speedToMs(6)).toBe(500);
+    expect(speedToMs(5)).toBe(500);
   });
 });

@@ -59,7 +59,7 @@ describe("Settings", () => {
     const newGameSettings: GameSettings = {
       boardSize: { x: 70, y: 30 },
       boardFillPercent: 25,
-      speed: 5,
+      speed: 4,
     };
 
     const {

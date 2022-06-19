@@ -1,52 +1,51 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { cleanup, fireEvent, render } from "@testing-library/react";
 import App from "./App";
-import { UserLoginContext } from "./components/UserLoginProvider/UserLoginProvider";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { ROUTE } from "./constants";
+import { MemoryRouter } from "react-router-dom";
+import { store } from "./state/store";
+import { Provider } from "react-redux";
+import { appActions } from "./state/appSlice/appSlice";
+import { CellsData } from "./types";
+
+afterEach(cleanup);
+
+jest.mock("./localStorage", () => {
+  const mockData = {
+    login: "%user%",
+    appState: {
+      settings: {
+        boardSize: { x: 50, y: 50 },
+        boardFillPercent: 15,
+        speed: 3,
+      },
+      cellsData: [] as CellsData,
+      mode: "stop",
+    },
+  };
+  return {
+    saveLocalCellsData: jest.fn(() => undefined),
+    saveLocalAppState: jest.fn(() => undefined),
+    loadLocalLogin: jest.fn(() => mockData.login),
+    loadLocalAppState: jest.fn(() => mockData.appState),
+  };
+});
 
 describe("App", () => {
-  it("render test if there is no user", () => {
-    const state = { login: "" };
-    const onLogin = jest.fn();
-    const onLogout = jest.fn();
-
-    const { queryByTestId } = render(
-      <UserLoginContext.Provider value={{ state, onLogin, onLogout }}>
-        <MemoryRouter initialEntries={[ROUTE.ROOT]}>
-          <Routes>
-            <Route path={ROUTE.ROOT} element={<App />} />
-          </Routes>
-        </MemoryRouter>
-      </UserLoginContext.Provider>
-    );
-
-    expect(queryByTestId("Игра «Жизнь»")).toBeNull();
-    expect(queryByTestId("greetingsUser")).toBeNull();
-    expect(queryByTestId("l-btn-logout")).toBeNull();
-    expect(queryByTestId("board")).toBeNull();
-    expect(queryByTestId("settingsGame")).toBeNull();
-  });
-
   it("should buttons work", () => {
-    const state = { login: "username" };
-    const onLogin = jest.fn();
-    const onLogout = jest.fn();
+    jest.spyOn(appActions, "setSettings");
 
     const { getByTestId, getByText, queryByTestId } = render(
-      <UserLoginContext.Provider value={{ state, onLogin, onLogout }}>
-        <MemoryRouter initialEntries={[ROUTE.ROOT]}>
-          <Routes>
-            <Route path={ROUTE.ROOT} element={<App />} />
-          </Routes>
+      <Provider store={store}>
+        <MemoryRouter>
+          <App />
         </MemoryRouter>
-      </UserLoginContext.Provider>
+      </Provider>
     );
 
     expect(getByText("Игра «Жизнь»")).toBeInTheDocument();
     expect(getByTestId("greetingsUser")).toBeInTheDocument();
     expect(getByTestId("greetingsUser")).toHaveTextContent(
-      `Здравствуйте, ${state.login}!`
+      "Здравствуйте, %user%!"
     );
     expect(getByTestId("l-btn-logout")).toBeInTheDocument();
     expect(getByTestId("board")).toBeInTheDocument();
@@ -57,6 +56,7 @@ describe("App", () => {
       target: { value: 60 },
     });
     fireEvent.click(getByTestId("s-btn-save"));
+    expect(appActions.setSettings).toHaveBeenCalledTimes(1);
     expect(getByTestId(`${0}${59}`)).toBeInTheDocument();
 
     fireEvent.click(getByTestId("s-btn-start"));

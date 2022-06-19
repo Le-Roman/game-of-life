@@ -11,7 +11,7 @@ jobs:
 
       - name: Install Packages
         run: |
-          npm install
+          npm install --legacy-peer-deps
       - name: Lint and tests check
         run: |
           npm run check

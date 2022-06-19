@@ -1,27 +1,32 @@
-import React, { ChangeEvent, FC, useContext, useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../elements/Button/Button";
 import { FlexBox } from "../../elements/FlexBox";
 import { Header } from "../../elements/Header";
 import { Input } from "../../elements/Input/Input";
+import { useUserActions } from "../../hooks/useActions";
+import { useLogin } from "../../hooks/useLogin";
+import { saveLocalLogin } from "../../localStorage";
 import { LocationState } from "../../types";
-import { UserLoginContext } from "../UserLoginProvider/UserLoginProvider";
 
 const FormLogin: FC = () => {
-  const { onLogin } = useContext(UserLoginContext);
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState("");
+  const { setUser } = useUserActions();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useLogin();
 
   const locationState = location.state as LocationState;
   const from = locationState?.from?.pathname || "/";
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setValue(e.target.value.trim());
   };
 
   const onStartClick = () => {
-    onLogin(value);
+    saveLocalLogin(value);
+    setUser(value);
     setValue("");
     navigate(from, { replace: true });
   };

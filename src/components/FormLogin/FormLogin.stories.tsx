@@ -3,28 +3,20 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import FormLogin from "./FormLogin";
-import {
-  ContextState,
-  UserLoginContext,
-} from "../UserLoginProvider/UserLoginProvider";
 import { MemoryRouter } from "react-router-dom";
-
-const contextValue: ContextState = {
-  state: { login: "" },
-  onLogin: () => null,
-  onLogout: () => null,
-};
+import { Provider } from "react-redux";
+import { store } from "../../state/store";
 
 export default {
   title: "Game_of_life/FormLogin",
   component: FormLogin,
   decorators: [
     (Story) => (
-      <UserLoginContext.Provider value={{ ...contextValue }}>
+      <Provider store={store}>
         <MemoryRouter>
           <Story />
         </MemoryRouter>
-      </UserLoginContext.Provider>
+      </Provider>
     ),
   ],
 } as ComponentMeta<typeof FormLogin>;

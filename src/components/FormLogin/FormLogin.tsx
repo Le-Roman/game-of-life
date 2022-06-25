@@ -6,12 +6,11 @@ import { Header } from "../../elements/Header";
 import { Input } from "../../elements/Input/Input";
 import { useUserActions } from "../../hooks/useActions";
 import { useLogin } from "../../hooks/useLogin";
-import { saveLocalLogin } from "../../localStorage";
 import { LocationState } from "../../types";
 
 const FormLogin: FC = () => {
   const [value, setValue] = useState("");
-  const { setUser } = useUserActions();
+  const { login } = useUserActions();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,8 +24,7 @@ const FormLogin: FC = () => {
   };
 
   const onStartClick = () => {
-    saveLocalLogin(value);
-    setUser(value);
+    login(value);
     setValue("");
     navigate(from, { replace: true });
   };

@@ -23,8 +23,8 @@ jest.mock("./localStorage", () => {
     },
   };
   return {
-    saveLocalCellsData: jest.fn(() => undefined),
-    saveLocalAppState: jest.fn(() => undefined),
+    saveLocalCellsData: jest.fn(),
+    saveLocalAppState: jest.fn(),
     loadLocalLogin: jest.fn(() => mockData.login),
     loadLocalAppState: jest.fn(() => mockData.appState),
   };

@@ -33,8 +33,6 @@ const App = () => {
     [setSettings]
   );
 
-  const onCellClick = (coord: Coordinates) => changeCellsData(coord);
-
   if (!isLogined) return null;
 
   return (
@@ -59,7 +57,7 @@ const App = () => {
         </FlexBox>
         <Board
           cellsData={cellsData}
-          onCellClick={onCellClick}
+          onCellClick={changeCellsData}
           boardSize={settings.boardSize}
         />
       </FlexBox>

@@ -10,7 +10,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     isLogined ? navigate(ROUTE.ROOT) : navigate(ROUTE.AUTH);
-  }, [isLogined]);
+  }, [isLogined, navigate]);
 
   return { isLogined };
 };

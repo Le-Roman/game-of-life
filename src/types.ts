@@ -23,7 +23,7 @@ export interface State {
   login: string;
 }
 
-export enum Mode {
+export const enum Mode {
   PAUSE = "PAUSE",
   PLAY = "PLAY",
   STOP = "STOP",

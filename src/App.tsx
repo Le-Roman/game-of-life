@@ -1,85 +1,50 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { CellsData, Coordinates, GameSettings, Mode } from "./types";
-import {
-  generateBoard,
-  nextGeneration,
-  resizeBoard,
-  speedToMs,
-  toggleCell,
-} from "./utils";
+import React, { useCallback } from "react";
+import { Coordinates, GameSettings } from "./types";
 import Board from "./components/Board/Board";
 import Settings from "./components/Settings/Settings";
 import { FlexBox } from "./elements/FlexBox";
 import { Header } from "./elements/Header";
-import { UserLoginContext } from "./components/UserLoginProvider/UserLoginProvider";
 import { Button } from "./elements/Button/Button";
-
-const initialGameSettings: GameSettings = {
-  boardSize: { x: 50, y: 50 },
-  boardFillPercent: 15,
-  speed: 3,
-};
+import { useAppActions, useUserActions } from "./hooks/useActions";
+import { useTypedSelector } from "./hooks/useTypedSelector";
+import { usePlayGame } from "./hooks/usePlayGame";
+import { useCellsData } from "./hooks/useCellsData";
+import { useLogin } from "./hooks/useLogin";
+import { saveLocalLogin } from "./localStorage";
+import { selectAppState } from "./state/appSlice/appSelectors";
+import { selectUserState } from "./state/userSlice/userSelectors";
+import { useUnmountApp } from "./hooks/useUnmountApp";
 
 const App = () => {
-  const [settings, setSettings] = useState<GameSettings>(initialGameSettings);
-  const [cellsData, setCellsData] = useState<CellsData>([] as CellsData);
-  const [mode, setMode] = useState<Mode>(Mode.STOP);
-  const {
-    state: { login },
-    onLogout,
-  } = useContext(UserLoginContext);
+  const { setSettings, start, pause, stop, reStart, changeCellsData } =
+    useAppActions();
+  const { settings, cellsData, mode } = useTypedSelector(selectAppState);
+  const { name } = useTypedSelector(selectUserState);
+  const { setUser } = useUserActions();
+  const { isLogined } = useLogin();
 
-  useEffect(() => {
-    setCellsData((prevCellsData) =>
-      resizeBoard(prevCellsData, settings.boardSize)
-    );
-  }, [settings.boardSize]);
+  useCellsData();
+  usePlayGame();
+  useUnmountApp();
 
-  useEffect(() => {
-    setCellsData(generateBoard(settings));
-  }, [settings.boardFillPercent]);
-
-  useEffect(() => {
-    let playGame: number;
-    if (mode === Mode.PLAY) {
-      playGame = window.setInterval(() => {
-        setCellsData((prevCellsData) => nextGeneration(prevCellsData));
-      }, speedToMs(settings.speed));
-    } else {
-      setCellsData((prevCellsData) =>
-        resizeBoard(prevCellsData, settings.boardSize)
-      );
-    }
-    return () => clearInterval(playGame);
-  }, [mode, settings.boardSize, settings.speed]);
-
-  useEffect(() => {
-    if (!login) {
-      setMode(Mode.STOP);
-      setCellsData(generateBoard(settings));
-      setSettings(initialGameSettings);
-    }
-  }, [login]);
+  const onStart = () => start();
+  const onPause = () => pause();
+  const onReStart = () => reStart(settings);
 
   const onChangeSettings = useCallback(
-    (settings: GameSettings): void => setSettings(settings),
-    []
+    (settings: GameSettings) => setSettings(settings),
+    [setSettings]
   );
 
-  const onStart = (): void => setMode(Mode.PLAY);
-
-  const onPause = (): void => setMode(Mode.PAUSE);
-
-  const onReStart = (): void => {
-    setMode(Mode.STOP);
-    setCellsData(generateBoard(settings));
+  const onLogout = () => {
+    saveLocalLogin("");
+    setUser("");
+    stop();
   };
 
-  const onCellClick = (coord: Coordinates): void => {
-    setCellsData((prevCellsData) => toggleCell(coord, prevCellsData));
-  };
+  const onCellClick = (coord: Coordinates) => changeCellsData(coord);
 
-  if (!login) return null;
+  if (!isLogined) return null;
 
   return (
     <FlexBox alignItems="center" flexDirection="vertical">
@@ -87,24 +52,24 @@ const App = () => {
       <FlexBox gap="1rem">
         <FlexBox alignItems="center" flexDirection="vertical">
           <FlexBox flexDirection="vertical" width="100%">
-            <label data-testid="greetingsUser">Здравствуйте, {login}!</label>
+            <label data-testid="greetingsUser">Здравствуйте, {name}!</label>
             <Button onClick={onLogout} data-testid="l-btn-logout">
               Выйти
             </Button>
           </FlexBox>
           <Settings
+            mode={mode}
             settings={settings}
-            onChangeSettings={onChangeSettings}
             onPause={onPause}
             onStart={onStart}
             onReStart={onReStart}
-            mode={mode}
+            onChangeSettings={onChangeSettings}
           />
         </FlexBox>
         <Board
           cellsData={cellsData}
-          boardSize={settings.boardSize}
           onCellClick={onCellClick}
+          boardSize={settings.boardSize}
         />
       </FlexBox>
     </FlexBox>

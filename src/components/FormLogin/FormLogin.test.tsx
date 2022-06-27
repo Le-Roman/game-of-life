@@ -1,12 +1,11 @@
 import { render, cleanup, fireEvent } from "@testing-library/react";
 import React from "react";
+import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { ROUTE } from "../../constants";
-import {
-  UserLoginContext,
-  UserLoginProvider,
-} from "../UserLoginProvider/UserLoginProvider";
 import FormLogin from "./FormLogin";
+import { store } from "../../state/store";
+import { userActions } from "../../state/userSlice/userSlice";
 
 afterEach(cleanup);
 
@@ -15,13 +14,13 @@ const mockUserName = "UserName";
 describe("FormLogin", () => {
   it("render", () => {
     const { getByTestId, getByText } = render(
-      <UserLoginProvider>
+      <Provider store={store}>
         <MemoryRouter initialEntries={[ROUTE.AUTH]}>
           <Routes>
             <Route path={ROUTE.AUTH} element={<FormLogin />} />
           </Routes>
         </MemoryRouter>
-      </UserLoginProvider>
+      </Provider>
     );
 
     expect(getByText("Игра «Жизнь»")).toBeInTheDocument();
@@ -34,18 +33,16 @@ describe("FormLogin", () => {
   });
 
   it("enter username in input and click on start", () => {
-    const state = { login: "" };
-    const onLogin = jest.fn();
-    const onLogout = jest.fn();
+    jest.spyOn(userActions, "setUser");
     const { getByTestId, queryByTestId } = render(
-      <UserLoginContext.Provider value={{ state, onLogin, onLogout }}>
+      <Provider store={store}>
         <MemoryRouter initialEntries={[ROUTE.AUTH]}>
           <Routes>
             <Route path={ROUTE.ROOT} element={<FormLogin />} />
             <Route path={ROUTE.AUTH} element={<FormLogin />} />
           </Routes>
         </MemoryRouter>
-      </UserLoginContext.Provider>
+      </Provider>
     );
 
     const inputUserName = getByTestId("inputUserName");
@@ -53,26 +50,8 @@ describe("FormLogin", () => {
 
     expect(inputUserName).toHaveValue(mockUserName);
     fireEvent.click(getByTestId("l-btn-login"));
-    expect(onLogin).toBeCalledTimes(1);
-    expect(onLogin).toBeCalledWith(mockUserName);
+    expect(userActions.setUser).toBeCalledTimes(1);
+    expect(userActions.setUser).toBeCalledWith(mockUserName);
     expect(queryByTestId("inputUserName")).toHaveValue("");
-  });
-
-  it("render when user login and should logout", () => {
-    const state = { login: mockUserName };
-    const onLogout = jest.fn();
-    const onLogin = jest.fn();
-    const { getByTestId } = render(
-      <UserLoginContext.Provider value={{ state, onLogin, onLogout }}>
-        <MemoryRouter initialEntries={[ROUTE.AUTH]}>
-          <Routes>
-            <Route path={ROUTE.AUTH} element={<FormLogin />} />
-          </Routes>
-        </MemoryRouter>
-      </UserLoginContext.Provider>
-    );
-
-    expect(getByTestId("inputUserName")).toBeInTheDocument();
-    expect(getByTestId("inputUserName")).toHaveValue("");
   });
 });

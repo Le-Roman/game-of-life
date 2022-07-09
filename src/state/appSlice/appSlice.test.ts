@@ -1,14 +1,19 @@
 import { CellsData, GameSettings, Mode } from "../../types";
 import reducer, { appActions, AppState } from "./appSlice";
 
-jest.mock("../../localStorage", () => {
+const mockLoadLocalLogin = jest.fn();
+const mockSaveLocalCellsData = jest.fn();
+const mockSaveLocalAppState = jest.fn();
+const mockLoadLocalAppState = jest.fn(() => {
+  return {} as AppState;
+});
+
+jest.doMock("../../localStorage", () => {
   return {
-    loadLocalLogin: jest.fn(() => undefined),
-    saveLocalCellsData: jest.fn(() => undefined),
-    saveLocalAppState: jest.fn(() => undefined),
-    loadLocalAppState: jest.fn(() => {
-      return {} as AppState;
-    }),
+    loadLocalLogin: mockLoadLocalLogin,
+    saveLocalCellsData: mockSaveLocalCellsData,
+    saveLocalAppState: mockSaveLocalAppState,
+    loadLocalAppState: mockLoadLocalAppState,
   };
 });
 

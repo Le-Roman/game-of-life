@@ -24,3 +24,6 @@ yarn-error.log*
 
 storybook-static
 dist
+
+# stryker temp files
+.stryker-tmp

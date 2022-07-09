@@ -7,6 +7,7 @@ import {
   resizeBoard,
   toggleCell,
 } from "../../utils";
+import { userActions } from "../userSlice/userSlice";
 
 export interface AppState {
   settings: GameSettings;
@@ -77,6 +78,11 @@ export const appSlice = createSlice({
       state.settings = action.payload;
       state.mode = Mode.STOP;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(userActions.logout.type, (state) => {
+      state.mode = Mode.PAUSE;
+    });
   },
 });
 

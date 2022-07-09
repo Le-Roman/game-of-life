@@ -23,22 +23,11 @@ export interface State {
   login: string;
 }
 
-export enum Mode {
+export const enum Mode {
   PAUSE = "PAUSE",
   PLAY = "PLAY",
   STOP = "STOP",
 }
-
-export enum ActionType {
-  LOGIN = "login",
-  LOGOUT = "logout",
-  TEST = "test",
-}
-
-export type Action =
-  | { type: ActionType.LOGIN; payload: string }
-  | { type: ActionType.LOGOUT }
-  | { type: ActionType.TEST };
 
 export interface LocationState {
   from: {

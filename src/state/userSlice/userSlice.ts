@@ -16,6 +16,9 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    login: (_state, _action: PayloadAction<string>) => void 0,
+    logout: () => void 0,
   },
 });
 

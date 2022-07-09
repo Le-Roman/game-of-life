@@ -1,6 +1,6 @@
 import { AppState } from "./state/appSlice/appSlice";
 
-export enum LocalStorage {
+export const enum LocalStorage {
   LOGIN_KEY = "login",
   APP_STATE_KEY = "app_state",
 }

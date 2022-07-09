@@ -10,7 +10,7 @@ export const useCellsData = () => {
   const { cellsData } = loadLocalAppState();
   const { setCellsData } = useAppActions();
 
-  return useEffect(() => {
+  useEffect(() => {
     if (!cellsData) setCellsData(appState.settings);
 
     saveLocalAppState(appState);

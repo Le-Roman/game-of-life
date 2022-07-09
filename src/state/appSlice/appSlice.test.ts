@@ -3,6 +3,7 @@ import reducer, { appActions, AppState } from "./appSlice";
 
 jest.mock("../../localStorage", () => {
   return {
+    loadLocalLogin: jest.fn(() => undefined),
     saveLocalCellsData: jest.fn(() => undefined),
     saveLocalAppState: jest.fn(() => undefined),
     loadLocalAppState: jest.fn(() => {

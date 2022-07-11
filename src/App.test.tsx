@@ -6,10 +6,25 @@ import { store } from "./state/store";
 import { Provider } from "react-redux";
 import { appActions } from "./state/appSlice/appSlice";
 import { CellsData } from "./types";
+import * as localStorage from "./localStorage";
 
 afterEach(cleanup);
 
-jest.mock("./localStorage", () => {
+// const mockSaveLocalAppState = jest.fn()
+// const mockLoadLocalLogin = jest.fn(() => mockData.login)
+// const mockLoadLocalAppState = jest.fn(() => mockData.appState)
+
+// jest.mock("./localStorage", () => {
+//   return {
+//     saveLocalAppState: mockSaveLocalAppState,
+//     loadLocalLogin: mockLoadLocalLogin,
+//     loadLocalAppState: mockLoadLocalAppState,
+//   };
+// });
+
+jest.mock("./localStorage");
+
+describe("App", () => {
   const mockData = {
     login: "%user%",
     appState: {
@@ -22,17 +37,18 @@ jest.mock("./localStorage", () => {
       mode: "stop",
     },
   };
-  return {
-    saveLocalCellsData: jest.fn(),
-    saveLocalAppState: jest.fn(),
-    loadLocalLogin: jest.fn(() => mockData.login),
-    loadLocalAppState: jest.fn(() => mockData.appState),
-  };
-});
 
-describe("App", () => {
   it("should buttons work", () => {
-    jest.spyOn(appActions, "setSettings");
+    jest
+      .spyOn(
+        appActions,
+        "setSettings"
+      )(localStorage.saveLocalAppState as jest.Mock)
+      .mockResolvedValueOnce(null)(localStorage.loadLocalLogin as jest.Mock)
+      .mockResolvedValueOnce(mockData.login)(
+        localStorage.loadLocalAppState as jest.Mock
+      )
+      .mockResolvedValueOnce(mockData.appState);
 
     const { getByTestId, getByText, queryByTestId } = render(
       <Provider store={store}>

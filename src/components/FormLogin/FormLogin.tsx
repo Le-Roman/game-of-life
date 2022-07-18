@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../elements/Button/Button";
 import { FlexBox } from "../../elements/FlexBox";
@@ -6,6 +12,7 @@ import { Header } from "../../elements/Header";
 import { Input } from "../../elements/Input/Input";
 import { useUserActions } from "../../hooks/useActions";
 import { useLogin } from "../../hooks/useLogin";
+import { saveLocalLogin } from "../../localStorage";
 import { LocationState } from "../../types";
 
 const FormLogin: FC = () => {
@@ -27,6 +34,7 @@ const FormLogin: FC = () => {
     login(value);
     setValue("");
     navigate(from, { replace: true });
+    saveLocalLogin(value);
   };
 
   return (

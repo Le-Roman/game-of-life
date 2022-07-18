@@ -1,17 +1,19 @@
 import React, { useCallback } from "react";
-import { Coordinates, GameSettings } from "./types";
-import Board from "./components/Board/Board";
-import Settings from "./components/Settings/Settings";
-import { FlexBox } from "./elements/FlexBox";
-import { Header } from "./elements/Header";
-import { Button } from "./elements/Button/Button";
-import { useAppActions, useUserActions } from "./hooks/useActions";
-import { useTypedSelector } from "./hooks/useTypedSelector";
-import { useCellsData } from "./hooks/useCellsData";
-import { useLogin } from "./hooks/useLogin";
-import { selectAppState } from "./state/appSlice/appSelectors";
-import { selectUserState } from "./state/userSlice/userSelectors";
-import { useUnmountApp } from "./hooks/useUnmountApp";
+import { Button } from "../../elements/Button/Button";
+import { FlexBox } from "../../elements/FlexBox";
+import { Header } from "../../elements/Header";
+import { useAppActions, useUserActions } from "../../hooks/useActions";
+import { useCellsData } from "../../hooks/useCellsData";
+import { useLocalAppState } from "../../hooks/useLocalAppState";
+import { useLogin } from "../../hooks/useLogin";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useUnmountApp } from "../../hooks/useUnmountApp";
+import { saveLocalLogin } from "../../localStorage";
+import { selectAppState } from "../../state/appSlice/appSelectors";
+import { selectUserState } from "../../state/userSlice/userSelectors";
+import { GameSettings } from "../../types";
+import Board from "../Board/Board";
+import Settings from "../Settings/Settings";
 
 const App = () => {
   const { setSettings, start, pause, reStart, changeCellsData } =
@@ -21,12 +23,18 @@ const App = () => {
   const { logout } = useUserActions();
   const { isLogined } = useLogin();
 
+  useLocalAppState();
   useCellsData();
   useUnmountApp();
 
   const onStart = () => start();
   const onPause = () => pause();
   const onReStart = () => reStart(settings);
+
+  const onLogout = () => {
+    logout();
+    saveLocalLogin("");
+  };
 
   const onChangeSettings = useCallback(
     (settings: GameSettings) => setSettings(settings),
@@ -42,7 +50,7 @@ const App = () => {
         <FlexBox alignItems="center" flexDirection="vertical">
           <FlexBox flexDirection="vertical" width="100%">
             <label data-testid="greetingsUser">Здравствуйте, {name}!</label>
-            <Button onClick={logout} data-testid="l-btn-logout">
+            <Button onClick={onLogout} data-testid="l-btn-logout">
               Выйти
             </Button>
           </FlexBox>

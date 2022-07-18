@@ -1,18 +1,8 @@
 import React, { FC, memo } from "react";
 import { BoardSize, CellsData, Coordinates } from "../../types";
 import Cell from "../Cell/Cell";
-import styled from "styled-components";
 import { CELL_SIZE } from "../../constants";
-
-interface BoardStyledProps {
-  boardSize: BoardSize;
-  cellSize: number;
-}
-
-const BoardStyled = styled.div<BoardStyledProps>`
-  width: ${({ boardSize: { x }, cellSize }) => x * cellSize}px;
-  height: ${({ boardSize: { y }, cellSize }) => y * cellSize}px;
-`;
+import { BoardStyled } from "../../elements/BoardStyled";
 
 interface BoardProps {
   cellsData: CellsData;

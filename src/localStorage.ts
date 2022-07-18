@@ -20,7 +20,7 @@ export const saveLocalAppState = (appState: AppState) => {
 
 export const loadLocalAppState = (): AppState => {
   const appState = localStorage.getItem(LocalStorage.APP_STATE_KEY);
-  return appState ? JSON.parse(appState) : ({} as AppState);
+  return appState ? JSON.parse(appState) : null;
 };
 
 export const removeLocalAppState = () => {

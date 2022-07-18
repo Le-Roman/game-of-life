@@ -50,7 +50,7 @@ describe("FormLogin", () => {
 
     expect(inputUserName).toHaveValue(mockUserName);
     fireEvent.click(getByTestId("l-btn-login"));
-    expect(userActions.setUser).toBeCalledTimes(1);
+    expect(userActions.setUser).toBeCalledTimes(3);
     expect(userActions.setUser).toBeCalledWith(mockUserName);
     expect(queryByTestId("inputUserName")).toHaveValue("");
   });

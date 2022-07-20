@@ -1,7 +1,7 @@
 import React from "react";
 import { cleanup, render } from "@testing-library/react";
 import Board from "./Board";
-import { CellsData, CellState, GameSettings } from "../../types";
+import { CellsData, GameSettings } from "../../types";
 import { generateBoard } from "../../utils";
 
 afterEach(cleanup);

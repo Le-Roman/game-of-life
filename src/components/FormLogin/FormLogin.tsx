@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  FC,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { ChangeEvent, FC, useState } from "react";
 import { Button } from "../../elements/Button/Button";
 import { FlexBox } from "../../elements/FlexBox";
 import { Header } from "../../elements/Header";
@@ -13,18 +6,15 @@ import { Input } from "../../elements/Input/Input";
 import { useUserActions } from "../../hooks/useActions";
 import { useLogin } from "../../hooks/useLogin";
 import { saveLocalLogin } from "../../localStorage";
-import { LocationState } from "../../types";
+import { useRouter } from "next/router";
+import { ROUTE } from "../../constants";
 
 const FormLogin: FC = () => {
   const [value, setValue] = useState("");
   const { login } = useUserActions();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
 
   useLogin();
-
-  const locationState = location.state as LocationState;
-  const from = locationState?.from?.pathname || "/";
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value.trim());
@@ -33,7 +23,7 @@ const FormLogin: FC = () => {
   const onStartClick = () => {
     login(value);
     setValue("");
-    navigate(from, { replace: true });
+    router.push(ROUTE.ROOT);
     saveLocalLogin(value);
   };
 

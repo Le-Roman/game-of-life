@@ -119,7 +119,12 @@ const Settings: FC<SettingsPropsType> = memo(
           disabled={mode !== Mode.STOP}
         />
         <FlexBox justifyContent="space-around">
-          <Button onClick={save} disabled={!changed} data-testid="s-btn-save">
+          <Button
+            onClick={save}
+            disabled={!changed}
+            mode="secondary"
+            data-testid="s-btn-save"
+          >
             Применить
           </Button>
           <Button

@@ -1,13 +1,18 @@
 import React from "react";
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import Game from "./Game";
-import { MemoryRouter } from "react-router-dom";
 import { store } from "../../state/store";
 import { Provider } from "react-redux";
 import { appActions } from "../../state/appSlice/appSlice";
 import { CellsData } from "../../types";
 
 afterEach(cleanup);
+
+jest.mock("next/router", () => {
+  return {
+    useRouter: jest.fn(() => []),
+  };
+});
 
 jest.mock("../../localStorage", () => {
   const mockData = {
@@ -32,15 +37,10 @@ jest.mock("../../localStorage", () => {
 describe("Game", () => {
   it("should buttons work", () => {
     jest.spyOn(appActions, "setSettings");
-    // localStorage.saveLocalAppState.mockResolvedValueOnce(null)
-    // localStorage.loadLocalLogin.mockResolvedValueOnce('%user%')
-    // localStorage.loadLocalAppState.mockResolvedValueOnce(mockData.appState)
 
     const { getByTestId, getByText, queryByTestId } = render(
       <Provider store={store}>
-        <MemoryRouter>
-          <Game />
-        </MemoryRouter>
+        <Game />
       </Provider>
     );
 

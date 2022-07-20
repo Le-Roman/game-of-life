@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loadLocalAppState } from "../../localStorage";
 import { CellsData, Coordinates, GameSettings, Mode } from "../../types";
 import {
   generateBoard,

@@ -7,12 +7,14 @@ import { useTypedSelector } from "./useTypedSelector";
 
 export const useCellsData = () => {
   const appState = useTypedSelector(selectAppState);
-  const localAppState = loadLocalAppState();
+
   const { setCellsData } = useAppActions();
 
   useEffect(() => {
-    if (!localAppState) setCellsData(appState.settings);
-
-    saveLocalAppState(appState);
+    const localAppState = loadLocalAppState();
+    if (!localAppState) {
+      setCellsData(appState.settings);
+      saveLocalAppState(appState);
+    }
   }, [appState.settings]);
 };

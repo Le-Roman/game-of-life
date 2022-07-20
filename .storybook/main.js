@@ -10,4 +10,8 @@ module.exports = {
   core: {
     builder: '@storybook/builder-webpack5',
   },
+  webpackFinal: (config) => {
+    config.resolve.alias['next/router'] = require.resolve('../src/components/FormLogin/__mocks__/mockUseRouter.ts');
+    return config;
+  },
 }

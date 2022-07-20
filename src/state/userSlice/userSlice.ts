@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loadLocalLogin } from "../../localStorage";
 
 export interface UserState {
   name: string;

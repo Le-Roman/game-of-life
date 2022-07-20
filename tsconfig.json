@@ -3,9 +3,28 @@
     "target": "es5",
     "module": "commonjs",
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

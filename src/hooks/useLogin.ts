@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import { ROUTE } from "../constants";
 import { loadLocalLogin } from "../localStorage";
 import { selectIsLogined } from "../state/userSlice/userSelectors";
@@ -7,14 +7,22 @@ import { useUserActions } from "./useActions";
 import { useTypedSelector } from "./useTypedSelector";
 
 export const useLogin = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { login } = useUserActions();
   const isLogined = useTypedSelector(selectIsLogined);
 
   useEffect(() => {
-    login(loadLocalLogin());
-    isLogined ? navigate(ROUTE.ROOT) : navigate(ROUTE.AUTH);
-  }, [isLogined, navigate]);
+    if (isLogined) {
+      router.push(ROUTE.ROOT);
+    } else {
+      const user = loadLocalLogin();
+      if (user) {
+        login(user);
+      } else {
+        router.push(ROUTE.AUTH);
+      }
+    }
+  }, [isLogined, router, login]);
 
   return { isLogined };
 };

@@ -9,7 +9,6 @@ export const useLocalAppState = () => {
     if (localAppState) {
       setSettings(localAppState.settings);
       initCellsData(localAppState.cellsData);
-      pause();
     }
   }, []);
 };

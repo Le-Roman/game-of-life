@@ -22,7 +22,7 @@ export const useLogin = () => {
         router.push(ROUTE.AUTH);
       }
     }
-  }, [isLogined, router, login]);
+  }, [isLogined]);
 
   return { isLogined };
 };

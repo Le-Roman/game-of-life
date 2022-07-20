@@ -1,6 +1,5 @@
 module.exports = {
-    eslint: {
-      ignoreDuringBuilds: true,
-    },
-    distDir: 'dist',
-  }
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+}

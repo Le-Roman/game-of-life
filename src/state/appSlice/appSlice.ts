@@ -15,22 +15,19 @@ export interface AppState {
   mode: Mode;
 }
 
-export const produceAppState = (): AppState => {
-  const { cellsData, settings } = loadLocalAppState();
-  return {
-    settings: settings || {
-      boardSize: { x: 50, y: 50 },
-      boardFillPercent: 15,
-      speed: 3,
-    },
-    cellsData: cellsData || ([] as CellsData),
-    mode: cellsData ? Mode.PAUSE : Mode.STOP,
-  };
+export const initialState: AppState = {
+  settings: {
+    boardSize: { x: 50, y: 50 },
+    boardFillPercent: 15,
+    speed: 3,
+  },
+  cellsData: [] as CellsData,
+  mode: Mode.STOP,
 };
 
 export const appSlice = createSlice({
   name: "app",
-  initialState: produceAppState(),
+  initialState: initialState,
   reducers: {
     setSettings: (state, action: PayloadAction<GameSettings>) => {
       if (
@@ -51,6 +48,10 @@ export const appSlice = createSlice({
 
     setCellsData: (state, action: PayloadAction<GameSettings>) => {
       state.cellsData = generateBoard(action.payload);
+    },
+
+    initCellsData: (state, action: PayloadAction<CellsData>) => {
+      state.cellsData = action.payload;
     },
 
     generateCellSData: (state) => {

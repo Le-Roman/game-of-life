@@ -129,13 +129,15 @@ export const toggleCell = (
 ): CellsData => {
   const { x, y } = coord;
   if (y >= cellsData.length || y < 0) return cellsData;
-  if (x < 0 || x >= cellsData[y].length) return cellsData;
-  const newCellsData = [...cellsData];
-  newCellsData[y][x] =
-    newCellsData[y][x] === CELL_STATE_ALIVE
-      ? CELL_STATE_EMPTY
-      : CELL_STATE_ALIVE;
-  return newCellsData;
+  else if (x < 0 || x >= cellsData[y].length) return cellsData;
+  else {
+    const newCellsData = [...cellsData];
+    newCellsData[y][x] =
+      newCellsData[y][x] === CELL_STATE_ALIVE
+        ? CELL_STATE_EMPTY
+        : CELL_STATE_ALIVE;
+    return newCellsData;
+  }
 };
 
 export const speedToMs = (speed: number): number => {

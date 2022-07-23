@@ -80,12 +80,20 @@ describe("Utils", () => {
 
     const board = generateBoard(settings);
     const countAlive = getCountAlive(board);
-    const newBoardSize = { x: 100, y: 100 };
-    const newBoard = resizeBoard(board, newBoardSize);
+    let newBoardSize = { x: 100, y: 100 };
+    let newBoard = resizeBoard(board, newBoardSize);
     expect(newBoard).toHaveLength(newBoardSize.y);
     expect(newBoard[0]).toHaveLength(newBoardSize.x);
     const newCountAlive = getCountAlive(board);
     expect(countAlive).toBe(newCountAlive);
+    newBoardSize = { x: 50, y: 100 };
+    newBoard = resizeBoard(newBoard, newBoardSize);
+    expect(newBoard).toHaveLength(newBoardSize.y);
+    expect(newBoard[0]).toHaveLength(newBoardSize.x);
+    newBoardSize = { x: 50, y: 50 };
+    newBoard = resizeBoard(newBoard, newBoardSize);
+    expect(newBoard).toHaveLength(newBoardSize.y);
+    expect(newBoard[0]).toHaveLength(newBoardSize.x);
   });
 
   const cellsData: CellsData = [
@@ -125,11 +133,29 @@ describe("Utils", () => {
   });
 
   it("toggleCell", () => {
-    const coord = { x: 0, y: 0 };
-    const newCellsData = toggleCell(coord, cellsData);
+    let coord = { x: 0, y: 0 };
+    let newCellsData = toggleCell(coord, cellsData);
     expect(newCellsData).toHaveLength(3);
     expect(newCellsData[0]).toHaveLength(4);
     expect(newCellsData[coord.y][coord.x]).toBe(1);
+    coord = { x: -1, y: 0 };
+    newCellsData = toggleCell(coord, cellsData);
+    expect(newCellsData).toEqual(cellsData);
+    coord = { x: cellsData.length + 1, y: 0 };
+    newCellsData = toggleCell(coord, cellsData);
+    expect(newCellsData).toEqual(cellsData);
+    coord = { x: 0, y: -1 };
+    newCellsData = toggleCell(coord, cellsData);
+    expect(newCellsData).toEqual(cellsData);
+    coord = { x: 0, y: cellsData.length + 1 };
+    newCellsData = toggleCell(coord, cellsData);
+    expect(newCellsData).toEqual(cellsData);
+    coord = { x: 4, y: 0 };
+    newCellsData = toggleCell(coord, cellsData);
+    expect(newCellsData).toEqual(cellsData);
+    coord = { x: 6, y: 0 };
+    newCellsData = toggleCell(coord, cellsData);
+    expect(newCellsData).toEqual(cellsData);
   });
 
   it("speedToMs", () => {

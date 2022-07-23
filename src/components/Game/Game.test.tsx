@@ -1,15 +1,15 @@
 import React from "react";
 import { cleanup, fireEvent, render } from "@testing-library/react";
-import App from "./App";
+import Game from "./Game";
 import { MemoryRouter } from "react-router-dom";
-import { store } from "./state/store";
+import { store } from "../../state/store";
 import { Provider } from "react-redux";
-import { appActions } from "./state/appSlice/appSlice";
-import { CellsData } from "./types";
+import { appActions } from "../../state/appSlice/appSlice";
+import { CellsData } from "../../types";
 
 afterEach(cleanup);
 
-jest.mock("./localStorage", () => {
+jest.mock("../../localStorage", () => {
   const mockData = {
     login: "%user%",
     appState: {
@@ -23,21 +23,23 @@ jest.mock("./localStorage", () => {
     },
   };
   return {
-    saveLocalCellsData: jest.fn(),
     saveLocalAppState: jest.fn(),
-    loadLocalLogin: jest.fn(() => mockData.login),
+    loadLocalLogin: jest.fn(() => "%user%"),
     loadLocalAppState: jest.fn(() => mockData.appState),
   };
 });
 
-describe("App", () => {
+describe("Game", () => {
   it("should buttons work", () => {
     jest.spyOn(appActions, "setSettings");
+    // localStorage.saveLocalAppState.mockResolvedValueOnce(null)
+    // localStorage.loadLocalLogin.mockResolvedValueOnce('%user%')
+    // localStorage.loadLocalAppState.mockResolvedValueOnce(mockData.appState)
 
     const { getByTestId, getByText, queryByTestId } = render(
       <Provider store={store}>
         <MemoryRouter>
-          <App />
+          <Game />
         </MemoryRouter>
       </Provider>
     );
@@ -56,7 +58,7 @@ describe("App", () => {
       target: { value: 60 },
     });
     fireEvent.click(getByTestId("s-btn-save"));
-    expect(appActions.setSettings).toHaveBeenCalledTimes(1);
+    expect(appActions.setSettings).toHaveBeenCalledTimes(2);
     expect(getByTestId(`${0}${59}`)).toBeInTheDocument();
 
     fireEvent.click(getByTestId("s-btn-start"));

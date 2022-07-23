@@ -1,8 +1,10 @@
 import reducer, { UserState, userActions } from "./userSlice";
 
-jest.mock("../../localStorage", () => {
+const mockLoadLocalLogin = jest.fn();
+
+jest.doMock("../../localStorage", () => {
   return {
-    loadLocalLogin: jest.fn(() => undefined),
+    loadLocalLogin: mockLoadLocalLogin,
   };
 });
 

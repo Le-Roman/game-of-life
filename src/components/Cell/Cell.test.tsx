@@ -1,6 +1,5 @@
 import React from "react";
-import { cleanup, render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, render, fireEvent } from "@testing-library/react";
 import Cell from "./Cell";
 import { CellState } from "../../types";
 
@@ -17,7 +16,7 @@ describe("Cell", () => {
       <Cell cellData={cellData} x={x} y={y} onClick={onClick} />
     );
 
-    userEvent.click(getByTestId(`${y}${x}`));
+    fireEvent.click(getByTestId(`${y}${x}`));
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(onClick).toHaveBeenCalledWith({ x, y });
   });

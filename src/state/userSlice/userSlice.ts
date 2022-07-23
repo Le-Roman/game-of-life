@@ -5,8 +5,8 @@ export interface UserState {
   name: string;
 }
 
-const initialState: UserState = {
-  name: loadLocalLogin() || "",
+export const initialState: UserState = {
+  name: "",
 };
 
 export const userSlice = createSlice({
